@@ -20,6 +20,7 @@ A modern, interactive Tic-Tac-Toe game built with **React 19** and **Vite**. Exp
 
 - [About](#about)
 - [Features](#features)
+- [Screenshots & Live Demo](#screenshots--live-demo)
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
@@ -52,6 +53,34 @@ This is a fully functional Tic-Tac-Toe game implementation showcasing modern Rea
 - ♻️ **State Management**: Efficient React hooks (useState) for game state handling
 - 🔍 **ESLint Configured**: Code quality checks with ESLint and React-specific rules
 - 📱 **Responsive Design**: Works seamlessly across different screen sizes
+
+---
+
+## 🎬 Screenshots & Live Demo
+
+### 🌐 Live Deployment
+
+Experience the game live:
+
+<div align="center">
+
+[![Deploy on Netlify](https://img.shields.io/badge/Deploy%20on-Netlify-00C7B7?logo=netlify&logoColor=white)](https://netlify.com)
+
+**[🔗 Play Game Live](https://tic-tac-toe-exceptional.netlify.app/)**
+
+</div>
+
+### 📸 Game Screenshots
+
+#### Gameplay Screenshot
+![Tic-Tac-Toe Game Board](./image.png)
+
+### Quick Start from Live Demo
+1. Visit the [Live Demo Link](https://tic-tac-toe-exceptional.netlify.app/)
+2. Click on any empty square to make a move
+3. Alternate between X and O players
+4. Win by getting 3 in a row (horizontal, vertical, or diagonal)
+5. Refresh the page to start a new game
 
 ---
 
