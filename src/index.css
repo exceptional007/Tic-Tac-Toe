@@ -1,0 +1,188 @@
+:root {
+  --neon-blue: #00f3ff;
+  --neon-pink: #bc13fe;
+  --dark-bg: #050505;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --border-glow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue) inset;
+  --text-glow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+  --square-size: clamp(80px, 20vw, 120px); /* Responsive sizing */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--dark-bg);
+  font-family: 'Courier New', Courier, monospace; /* Tech/Terminal font */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--neon-blue);
+  overflow: hidden;
+  position: relative;
+}
+
+/* --- Futuristic Background Effects --- */
+
+/* Grid Background */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: 
+    linear-gradient(var(--glass-bg) 1px, transparent 1px),
+    linear-gradient(90deg, var(--glass-bg) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+  transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+  animation: grid-move 20s linear infinite;
+  z-index: -2;
+}
+
+/* CRT Scanline Overlay */
+body::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: -1;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+/* --- The Game Status (HUD) --- */
+
+.status {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-shadow: var(--text-glow);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 30px;
+  border: 1px solid var(--neon-blue);
+  box-shadow: 0 0 15px var(--neon-blue);
+  border-radius: 4px;
+  animation: flicker 4s infinite;
+  z-index: 10;
+}
+
+/* --- The Board Structure --- */
+
+/* Flexbox wrapper to replace floats and ensure centering */
+.board-row {
+  display: flex;
+  justify-content: center;
+}
+
+.board-row:after {
+  display: none; /* Remove old clear hack */
+}
+
+/* --- The Square Buttons --- */
+
+.square {
+  background: rgba(0, 10, 20, 0.6);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  float: left; /* Kept for fallback, but Flexbox above handles layout */
+  font-size: clamp(2rem, 5vw, 4rem); /* Responsive font size */
+  font-weight: bold;
+  line-height: var(--square-size);
+  height: var(--square-size);
+  width: var(--square-size);
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(2px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Hover Effects */
+.square:hover {
+  background: rgba(0, 243, 255, 0.1);
+  box-shadow: inset 0 0 20px var(--neon-blue);
+  border-color: var(--neon-blue);
+  z-index: 1; /* Bring to front on hover */
+  transform: scale(1.05);
+}
+
+/* Click/Active Effects */
+.square:active {
+  transform: scale(0.95);
+  background: var(--neon-blue);
+  color: #000;
+}
+
+/* Pop animation for when a value (X or O) appears */
+.square:not(:empty) {
+  animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  text-shadow: 
+    0 0 10px var(--neon-pink),
+    0 0 20px var(--neon-pink),
+    0 0 40px var(--neon-pink);
+  color: #fff;
+  border-color: var(--neon-pink);
+  background: rgba(188, 19, 254, 0.1);
+  box-shadow: inset 0 0 15px var(--neon-pink);
+}
+
+/* --- Animations --- */
+
+@keyframes grid-move {
+  0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
+  100% { transform: perspective(500px) rotateX(60deg) translateY(40px) translateZ(-200px); }
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    text-shadow: var(--text-glow);
+  }
+  20%, 24%, 55% {
+    opacity: 0.5;
+    text-shadow: none;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* --- Responsive Adjustments --- */
+
+@media (max-width: 500px) {
+  .status {
+    font-size: 1.2rem;
+    padding: 8px 15px;
+  }
+  
+  body {
+    padding: 10px;
+  }
+}
